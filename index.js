@@ -236,7 +236,21 @@ res.send(result);
       res.send(advertised);
     });
 
-
+    // update a product for advertise start
+    app.patch("/categories/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+     
+      const updatedDoc = {
+        $set: {
+          isAdvertised: true,
+        },
+      };
+      const result = await allcategories.updateOne(filter, updatedDoc);
+      console.log(result)
+      res.send(result);
+    });
+    // update a product for advertise end
 
 
 }
