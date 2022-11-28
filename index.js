@@ -80,6 +80,7 @@ res.send(result);
 
 });
 
+
 app.get('/categories/:name',async(req,res)=>{
 
 const name= req.params.name;
@@ -89,13 +90,27 @@ res.send(result);
 
 });
 
-app.get('/bookings',veryfyjwt,async(req,res)=>{
+app.delete('/categories/:id',async(req,res)=>{
+
+const id= req.params.id;
+const filter = {_id: ObjectId(id)};
+const result = await allcategories.deleteOne(filter);
+res.send(result);
+
+});
+
+// get a users product API start
+    app.get("/categories", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      console.log(query);
+      const products = await allcategories.find(query).toArray();
+      res.send(products);
+    });
+    // get a users product API end
+
+app.get('/bookings',async(req,res)=>{
 const email= req.query.email;
-const decodedEmail =req.decoded.email;
-console.log({email,decodedEmail})
-if(email !== decodedEmail){
-    return res.status(403).send({message: 'forbidden access'})
-}
 const query={email}
 const bookings= await bookingcollection.find(query).toArray();
 res.send(bookings);
@@ -221,19 +236,7 @@ res.send(result);
       res.send(advertised);
     });
 
-    // update a product for advertise start
-    app.patch("/categories/:id", async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: ObjectId(id) };
-      const updatedDoc = {
-        $set: {
-          isAdvertised: true,
-        },
-      };
-      const result = await allcategories.updateOne(filter, updatedDoc);
-      res.send(result);
-    });
-    // update a product for advertise end
+
 
 
 }
