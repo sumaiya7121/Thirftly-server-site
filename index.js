@@ -215,14 +215,7 @@ const updatedDoc = {
     res.send(result);
 });
 
-app.delete('/users/:id',veryfyjwt,async(req,res)=>{
 
-const id= req.params.id;
-const filter = {_id: ObjectId(id)};
-const result = await userscollection.deleteOne(filter);
-res.send(result);
-
-});
     app.get("/categories", async (req, res) => {
       const sellerEmail = req.query.email;
       const query = { sellerEmail: sellerEmail };
