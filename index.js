@@ -223,18 +223,7 @@ const result = await userscollection.deleteOne(filter);
 res.send(result);
 
 });
-    app.get("/categories", async (req, res) => {
-      const sellerEmail = req.query.email;
-      const query = { sellerEmail: sellerEmail };
-      const products = await allcategories.find(query).toArray();
-      res.send(products);
-    });
 
-     app.get("/categories/advertised", async (req, res) => {
-      const query = { isAdvertised: true };
-      const advertised = await allcategories.find(query).toArray();
-      res.send(advertised);
-    });
 
     // update a product for advertise start
     app.patch("/categories/:id", async (req, res) => {
